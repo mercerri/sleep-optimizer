@@ -1,0 +1,208 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, #dbeafe 0%, #eef2ff 40%, #f9fafb 100%);
+  color: #0f172a;
+}
+
+.app {
+  max-width: 840px;
+  margin: 3rem auto;
+  padding: 2.5rem 2rem 3rem;
+  background: #ffffffd9;
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+}
+
+.app-header h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2.1rem;
+}
+
+.app-header p {
+  margin: 0 0 1.6rem;
+  color: #4b5563;
+  max-width: 32rem;
+}
+
+.card {
+  margin-top: 1.5rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.9rem 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+label {
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+input {
+  padding: 0.55rem 0.65rem;
+  border-radius: 10px;
+  border: 1px solid #cbd5f5;
+  font-size: 0.96rem;
+}
+
+input:focus {
+  outline: 2px solid #4f46e5;
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+button {
+  cursor: pointer;
+  font-size: 0.98rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: none;
+  padding: 0.65rem 1.4rem;
+  align-self: flex-start;
+}
+
+button.primary {
+  background: #4f46e5;
+  color: white;
+  margin-top: 0.4rem;
+}
+
+button.primary:hover {
+  background: #4338ca;
+}
+
+button.secondary {
+  background: transparent;
+  border: 1px solid #cbd5f5;
+  color: #111827;
+  font-weight: 500;
+  padding-inline: 1rem;
+}
+
+button.secondary:hover {
+  border-color: #4f46e5;
+}
+
+.hint {
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.status {
+  margin-top: 1.25rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  font-size: 0.94rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.status-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid #e5e7eb;
+  border-top-color: #4f46e5;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bedtime {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.result-grid h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.result-grid p {
+  margin: 0.1rem 0;
+  font-size: 0.96rem;
+}
+
+.comfort-note {
+  margin-top: 0.9rem;
+  color: #374151;
+}
+
+.app-footer {
+  margin-top: 2rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.82rem;
+}
+
+.app-footer a {
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .app {
+    margin: 1.5rem;
+    padding: 1.75rem 1.25rem 2rem;
+  }
+}

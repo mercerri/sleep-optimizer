@@ -1,1 +1,137 @@
-hihihi
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sleep Optimizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app-header">
+        <h1>Sleep Optimizer</h1>
+        <p>
+          Get a recommended bedtime window based on tonight’s weather and
+          tomorrow’s daylight.
+        </p>
+      </header>
+
+      <section class="card">
+        <h2>Step 1: Enter your info</h2>
+
+        <form id="sleep-form" class="form">
+          <div class="form-row">
+            <div class="field">
+              <label for="latitude">Latitude</label>
+              <input
+                id="latitude"
+                name="latitude"
+                type="number"
+                step="0.0001"
+                placeholder="e.g. 43.6532"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="longitude">Longitude</label>
+              <input
+                id="longitude"
+                name="longitude"
+                type="number"
+                step="0.0001"
+                placeholder="e.g. -79.3832"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="button" id="use-location" class="secondary">
+            Use my current location
+          </button>
+
+          <div class="field">
+            <label for="wake-time">Wake-up time (tomorrow)</label>
+            <input id="wake-time" name="wake-time" type="time" required />
+          </div>
+
+          <div class="field">
+            <label for="sleep-hours">Desired sleep duration (hours)</label>
+            <input
+              id="sleep-hours"
+              name="sleep-hours"
+              type="number"
+              min="4"
+              max="12"
+              value="8"
+              required
+            />
+          </div>
+
+          <button type="submit" id="optimize-btn" class="primary">
+            Get bedtime recommendation
+          </button>
+        </form>
+
+        <p id="hint" class="hint">
+          Tip: you can get latitude/longitude for any city using Google Maps.
+        </p>
+      </section>
+
+      <section id="loading" class="status hidden">
+        <div class="spinner"></div>
+        <p>Calculating your ideal bedtime…</p>
+      </section>
+
+      <section id="error" class="status status-error hidden"></section>
+
+      <section id="results" class="card hidden">
+        <h2>Recommended bedtime window</h2>
+        <p class="bedtime" id="bedtime-window"></p>
+
+        <div class="result-grid">
+          <div>
+            <h3>Sun &amp; time</h3>
+            <p>
+              <strong>Tomorrow’s sunrise:</strong>
+              <span id="sunrise"></span>
+            </p>
+            <p>
+              <strong>Total sleep duration:</strong>
+              <span id="sleep-duration"></span>
+            </p>
+          </div>
+
+          <div>
+            <h3>Overnight conditions</h3>
+            <p>
+              <strong>Avg temperature:</strong>
+              <span id="avg-temp"></span>
+            </p>
+            <p>
+              <strong>Avg humidity:</strong>
+              <span id="avg-humidity"></span>
+            </p>
+          </div>
+        </div>
+
+        <p id="comfort-note" class="comfort-note"></p>
+      </section>
+
+      <footer class="app-footer">
+        <small>
+          Data from
+          <a href="https://sunrise-sunset.org/api" target="_blank"
+            >Sunrise–Sunset API</a
+          >
+          and
+          <a href="https://open-meteo.com/" target="_blank"
+            >Open-Meteo Weather API</a
+          >.
+        </small>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
