@@ -232,6 +232,15 @@ button.secondary:hover {
   }
 }
 
+/* Light clock icon for time inputs */
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.6);
+  opacity: 0.8;
+}
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
 /* Results */
 .card--results {
   margin-top: 1.7rem;
