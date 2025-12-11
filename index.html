@@ -7,17 +7,29 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="sky">
+      <div class="sky-stars sky-stars--1"></div>
+      <div class="sky-stars sky-stars--2"></div>
+    </div>
+
     <main class="app">
       <header class="app-header">
-        <h1>Sleep Optimizer</h1>
-        <p>
-          Get a recommended bedtime window based on tonight’s weather and
-          tomorrow’s daylight.
-        </p>
+        <div class="title-row">
+          <div class="moon-icon">
+            <span class="moon"></span>
+          </div>
+          <div>
+            <h1>Sleep Optimizer</h1>
+            <p>
+              Choose a better bedtime window based on tonight’s weather
+              and tomorrow’s daylight.
+            </p>
+          </div>
+        </div>
       </header>
 
-      <section class="card">
-        <h2>Step 1: Enter your info</h2>
+      <section class="card card--form">
+        <h2>Step 1 · Your sleep plan</h2>
 
         <form id="sleep-form" class="form">
           <div class="form-row">
@@ -28,7 +40,7 @@
                 name="latitude"
                 type="number"
                 step="0.0001"
-                placeholder="Enter latitude"
+                placeholder="e.g. 43.6532"
                 required
               />
             </div>
@@ -40,7 +52,7 @@
                 name="longitude"
                 type="number"
                 step="0.0001"
-                placeholder="Enter longitude"
+                placeholder="e.g. -79.3832"
                 required
               />
             </div>
@@ -50,22 +62,24 @@
             Use my current location
           </button>
 
-          <div class="field">
-            <label for="wake-time">Wake-up time (tomorrow)</label>
-            <input id="wake-time" name="wake-time" type="time" required />
-          </div>
+          <div class="form-row form-row--single">
+            <div class="field">
+              <label for="wake-time">Wake-up time (tomorrow)</label>
+              <input id="wake-time" name="wake-time" type="time" required />
+            </div>
 
-          <div class="field">
-            <label for="sleep-hours">Desired sleep duration (hours)</label>
-            <input
-              id="sleep-hours"
-              name="sleep-hours"
-              type="number"
-              min="4"
-              max="12"
-              value="8"
-              required
-            />
+            <div class="field">
+              <label for="sleep-hours">Desired sleep duration (hours)</label>
+              <input
+                id="sleep-hours"
+                name="sleep-hours"
+                type="number"
+                min="4"
+                max="12"
+                value="8"
+                required
+              />
+            </div>
           </div>
 
           <button type="submit" id="optimize-btn" class="primary">
@@ -85,40 +99,40 @@
 
       <section id="error" class="status status-error hidden"></section>
 
-      <section id="results" class="card hidden">
-  <h2>Recommended bedtime window</h2>
-  <p class="bedtime" id="bedtime-window"></p>
-  <p class="sleep-window" id="sleep-window"></p>
+      <!-- Results panel -->
+      <section id="results" class="card card--results hidden">
+        <h2>Tonight’s bedtime window</h2>
+        <p class="bedtime" id="bedtime-window"></p>
+        <p class="sleep-window" id="sleep-window"></p>
 
-  <div class="result-grid">
-    <div>
-      <h3>Sun &amp; time</h3>
-      <p>
-        <strong>Tomorrow’s sunrise:</strong>
-        <span id="sunrise"></span>
-      </p>
-      <p>
-        <strong>Total sleep duration:</strong>
-        <span id="sleep-duration"></span>
-      </p>
-    </div>
+        <div class="result-grid">
+          <div class="result-column">
+            <h3>Sun &amp; time</h3>
+            <p>
+              <span class="label">Tomorrow’s sunrise</span>
+              <span class="value" id="sunrise"></span>
+            </p>
+            <p>
+              <span class="label">Total sleep duration</span>
+              <span class="value" id="sleep-duration"></span>
+            </p>
+          </div>
 
-    <div>
-      <h3>Overnight conditions</h3>
-      <p>
-        <strong>Avg temperature:</strong>
-        <span id="avg-temp"></span>
-      </p>
-      <p>
-        <strong>Avg humidity:</strong>
-        <span id="avg-humidity"></span>
-      </p>
-    </div>
-  </div>
+          <div class="result-column">
+            <h3>Overnight conditions</h3>
+            <p>
+              <span class="label">Average temperature</span>
+              <span class="value" id="avg-temp"></span>
+            </p>
+            <p>
+              <span class="label">Average humidity</span>
+              <span class="value" id="avg-humidity"></span>
+            </p>
+          </div>
+        </div>
 
-  <p id="comfort-note" class="comfort-note"></p>
-</section>
-
+        <p id="comfort-note" class="comfort-note"></p>
+      </section>
 
       <footer class="app-footer">
         <small>

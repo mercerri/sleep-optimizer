@@ -40,7 +40,7 @@ function formatTime(date) {
       minute: "2-digit",
       hour12: true,
     })
-    .replace(" ", "\u00A0"); // keep AM/PM stuck to the time
+    .replace(" ", "\u00A0"); // keep AM/PM attached
 }
 
 function formatTemp(value) {
@@ -88,7 +88,7 @@ async function fetchSunriseSunset(lat, lon, dateStr) {
   if (!res.ok) throw new Error("Sunrise–Sunset API error");
   const data = await res.json();
   if (data.status !== "OK") throw new Error("Sunrise–Sunset response error");
-  return new Date(data.results.sunrise); // Date object
+  return new Date(data.results.sunrise);
 }
 
 async function fetchWeather(lat, lon, startDate, endDate) {
@@ -180,7 +180,6 @@ form.addEventListener("submit", async (event) => {
 
     const tomorrowStr = wakeDate.toISOString().slice(0, 10);
 
-    // Fetch in parallel
     const [sunriseTime, hourlyWeather] = await Promise.all([
       fetchSunriseSunset(lat, lon, tomorrowStr),
       fetchWeather(lat, lon, bedtimeDate, wakeDate),
@@ -194,22 +193,20 @@ form.addEventListener("submit", async (event) => {
 
     // --- Bedtime & sleep windows ---
 
-    // You want to be ASLEEP by bedtimeDate,
-    // so suggest being in bed ~30 minutes before.
     const bedtimeBufferMinutes = 30;
     const bedtimeStart = new Date(
       bedtimeDate.getTime() - bedtimeBufferMinutes * 60 * 1000
     );
 
-    // Bedtime window = when to get into bed
     bedtimeWindowEl.textContent = `Go to bed between ${formatTime(
       bedtimeStart
     )} and ${formatTime(bedtimeDate)}.`;
 
-    // Sleep window = likely asleep period
-    sleepWindowTextEl.textContent = `You’ll likely be asleep between ${formatTime(
-      bedtimeDate
-    )} and ${formatTime(wakeDate)}.`;
+    if (sleepWindowTextEl) {
+      sleepWindowTextEl.textContent = `You’ll likely be asleep between ${formatTime(
+        bedtimeDate
+      )} and ${formatTime(wakeDate)}.`;
+    }
 
     sunriseEl.textContent = formatTime(sunriseTime);
     sleepDurationEl.textContent = `${sleepHours.toFixed(1)} hours`;
@@ -217,7 +214,6 @@ form.addEventListener("submit", async (event) => {
     avgTempEl.textContent = formatTemp(stats.avgTemp);
     avgHumidityEl.textContent = formatHumidity(stats.avgHumidity);
 
-    // Simple comfort note
     let comfort = "Conditions look reasonable for sleep.";
     if (stats.avgTemp > 24 || stats.maxTemp > 26) {
       comfort = "It may feel warm overnight. A fan or lighter bedding might help.";

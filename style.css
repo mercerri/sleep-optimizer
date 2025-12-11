@@ -1,51 +1,117 @@
+/* Reset-ish */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+/* Night sky background */
 body {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "Segoe UI", sans-serif;
-  background: linear-gradient(180deg, #dbeafe 0%, #eef2ff 40%, #f9fafb 100%);
-  color: #0f172a;
+  min-height: 100vh;
+  color: #e5e7eb;
+  background: radial-gradient(circle at 10% 0%, #1e293b 0, #020617 50%, #020617 100%);
+  position: relative;
+  overflow-x: hidden;
 }
 
+/* Star layers */
+.sky {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sky-stars {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(#f9fafb 0.5px, transparent 0.5px);
+  background-size: 80px 80px;
+  opacity: 0.18;
+}
+
+.sky-stars--2 {
+  background-size: 120px 120px;
+  opacity: 0.12;
+}
+
+/* Main app shell */
 .app {
-  max-width: 840px;
+  position: relative;
+  z-index: 1;
+  max-width: 880px;
   margin: 3rem auto;
-  padding: 2.5rem 2rem 3rem;
-  background: #ffffffd9;
-  border-radius: 24px;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+  padding: 2.5rem 2.25rem 2.75rem;
+  border-radius: 32px;
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.92));
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(148, 163, 184, 0.2);
+}
+
+/* Header */
+.app-header .title-row {
+  display: flex;
+  gap: 1.1rem;
+  align-items: center;
+  margin-bottom: 1.4rem;
 }
 
 .app-header h1 {
-  margin: 0 0 0.5rem;
-  font-size: 2.1rem;
+  margin: 0;
+  font-size: 2.2rem;
+  letter-spacing: 0.02em;
 }
 
 .app-header p {
-  margin: 0 0 1.6rem;
-  color: #4b5563;
+  margin: 0.35rem 0 0;
+  color: #9ca3af;
   max-width: 32rem;
 }
 
+/* Little moon icon */
+.moon-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #facc15, #fde68a, #fbbf24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.45);
+}
+
+.moon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fefce8;
+  box-shadow: -7px 0 0 0 #fbbf24;
+  position: relative;
+}
+
+/* Cards */
 .card {
   margin-top: 1.5rem;
-  padding: 1.5rem 1.75rem;
-  border-radius: 18px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  padding: 1.5rem 1.6rem 1.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: radial-gradient(circle at 10% 0%, #0f172a, #020617 70%);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.9);
 }
 
 .card h2 {
   margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+  font-size: 1.2rem;
 }
 
+/* Form */
 .form {
   display: flex;
   flex-direction: column;
@@ -54,95 +120,110 @@ body {
 
 .form-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 0.9rem 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.9rem 1.4rem;
+}
+
+.form-row--single {
+  margin-top: 0.25rem;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 label {
-  font-size: 0.95rem;
-  color: #374151;
+  font-size: 0.9rem;
+  color: #cbd5f5;
 }
 
 input {
-  padding: 0.55rem 0.65rem;
+  padding: 0.55rem 0.7rem;
   border-radius: 10px;
-  border: 1px solid #cbd5f5;
+  border: 1px solid #1e293b;
   font-size: 0.96rem;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+input::placeholder {
+  color: #6b7280;
 }
 
 input:focus {
-  outline: 2px solid #4f46e5;
+  outline: 2px solid #6366f1;
   outline-offset: 1px;
   border-color: transparent;
 }
 
+/* Buttons */
 button {
   cursor: pointer;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   font-weight: 600;
   border-radius: 999px;
   border: none;
-  padding: 0.65rem 1.4rem;
+  padding: 0.6rem 1.4rem;
   align-self: flex-start;
 }
 
 button.primary {
-  background: #4f46e5;
-  color: white;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #f9fafb;
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.65);
 }
 
 button.primary:hover {
-  background: #4338ca;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
 }
 
 button.secondary {
   background: transparent;
-  border: 1px solid #cbd5f5;
-  color: #111827;
+  border: 1px solid #374151;
+  color: #e5e7eb;
   font-weight: 500;
-  padding-inline: 1rem;
+  padding-inline: 1.1rem;
 }
 
 button.secondary:hover {
-  border-color: #4f46e5;
+  border-color: #6366f1;
 }
 
 .hint {
   margin-top: 0.9rem;
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #9ca3af;
 }
 
+/* Status messages */
 .status {
   margin-top: 1.25rem;
   padding: 0.9rem 1.1rem;
   border-radius: 12px;
-  font-size: 0.94rem;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.5);
 }
 
 .status-error {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
+  background: rgba(127, 29, 29, 0.16);
+  border-color: #fca5a5;
+  color: #fecaca;
 }
 
 .spinner {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 3px solid #e5e7eb;
-  border-top-color: #4f46e5;
-  animation: spin 0.65s linear infinite;
+  border: 3px solid #1f2937;
+  border-top-color: #6366f1;
+  animation: spin 0.7s linear infinite;
 }
 
 @keyframes spin {
@@ -151,52 +232,72 @@ button.secondary:hover {
   }
 }
 
-.bedtime {
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin-top: 0.25rem;
-  margin-bottom: 0.35rem;
-  color: #111827;
+/* Results */
+.card--results {
+  margin-top: 1.7rem;
 }
 
-/* NEW: secondary line for “asleep between …” */
+.bedtime {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 0.3rem;
+  margin-bottom: 0.2rem;
+  color: #e5e7eb;
+}
+
 .sleep-window {
-  margin-top: -0.1rem;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 1.05rem;
   font-size: 0.95rem;
-  color: #4b5563;
+  color: #9ca3af;
 }
 
 .result-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.2rem;
 }
 
-.result-grid h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1rem;
+.result-column h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.98rem;
+  color: #cbd5f5;
 }
 
-.result-grid p {
-  margin: 0.1rem 0;
-  font-size: 0.96rem;
+.result-column p {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0.15rem 0;
+  font-size: 0.92rem;
+}
+
+.result-column .label {
+  color: #9ca3af;
+}
+
+.result-column .value {
+  font-weight: 500;
+  color: #e5e7eb;
+  margin-left: 0.8rem;
 }
 
 .comfort-note {
-  margin-top: 0.9rem;
-  color: #374151;
+  margin-top: 1rem;
+  font-size: 0.94rem;
+  color: #e5e7eb;
 }
 
+/* Footer */
 .app-footer {
-  margin-top: 2rem;
+  margin-top: 2.1rem;
   text-align: center;
   color: #6b7280;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }
 
 .app-footer a {
-  color: #4f46e5;
+  color: #a5b4fc;
   text-decoration: none;
 }
 
@@ -204,13 +305,23 @@ button.secondary:hover {
   text-decoration: underline;
 }
 
+/* Hidden helper */
 .hidden {
   display: none;
 }
 
-@media (max-width: 600px) {
+/* Responsive tweaks */
+@media (max-width: 640px) {
   .app {
-    margin: 1.5rem;
-    padding: 1.75rem 1.25rem 2rem;
+    margin: 1.7rem 1.1rem 2rem;
+    padding: 2rem 1.35rem 2.3rem;
+  }
+
+  .app-header .title-row {
+    align-items: flex-start;
+  }
+
+  .moon-icon {
+    margin-top: 0.25rem;
   }
 }
