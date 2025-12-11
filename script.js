@@ -6,6 +6,7 @@ const errorEl = document.getElementById("error");
 const resultsEl = document.getElementById("results");
 
 const bedtimeWindowEl = document.getElementById("bedtime-window");
+const sleepWindowTextEl = document.getElementById("sleep-window");
 const sunriseEl = document.getElementById("sunrise");
 const sleepDurationEl = document.getElementById("sleep-duration");
 const avgTempEl = document.getElementById("avg-temp");
@@ -29,11 +30,17 @@ function clearError() {
   errorEl.classList.add("hidden");
 }
 
+/**
+ * Force 12-hour time with visible AM/PM.
+ */
 function formatTime(date) {
-  return date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  return date
+    .toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    })
+    .replace(" ", "\u00A0"); // keep AM/PM stuck to the time
 }
 
 function formatTemp(value) {
@@ -85,7 +92,6 @@ async function fetchSunriseSunset(lat, lon, dateStr) {
 }
 
 async function fetchWeather(lat, lon, startDate, endDate) {
-  // Request a small date range around tonight/tomorrow
   const startStr = startDate.toISOString().slice(0, 10);
   const endStr = endDate.toISOString().slice(0, 10);
 
@@ -152,12 +158,15 @@ form.addEventListener("submit", async (event) => {
     const sleepHours = parseFloat(document.getElementById("sleep-hours").value);
 
     if (Number.isNaN(lat) || Number.isNaN(lon) || !wakeTimeStr || !sleepHours) {
-      throw new Error("Please fill in latitude, longitude, wake-up time, and sleep hours.");
+      throw new Error(
+        "Please fill in latitude, longitude, wake-up time, and sleep hours."
+      );
     }
 
     const now = new Date();
-
     const [wakeHour, wakeMinute] = wakeTimeStr.split(":").map(Number);
+
+    // Wake-up time is tomorrow at chosen time
     const wakeDate = new Date(
       now.getFullYear(),
       now.getMonth(),
@@ -169,10 +178,9 @@ form.addEventListener("submit", async (event) => {
     const sleepMillis = sleepHours * 60 * 60 * 1000;
     const bedtimeDate = new Date(wakeDate.getTime() - sleepMillis);
 
-    // Build date strings for API calls
     const tomorrowStr = wakeDate.toISOString().slice(0, 10);
 
-    // Fetch data in parallel
+    // Fetch in parallel
     const [sunriseTime, hourlyWeather] = await Promise.all([
       fetchSunriseSunset(lat, lon, tomorrowStr),
       fetchWeather(lat, lon, bedtimeDate, wakeDate),
@@ -184,11 +192,24 @@ form.addEventListener("submit", async (event) => {
       throw new Error("Could not find weather data for the selected window.");
     }
 
-    // --- Update UI ---
+    // --- Bedtime & sleep windows ---
 
-    bedtimeWindowEl.textContent = `${formatTime(
+    // You want to be ASLEEP by bedtimeDate,
+    // so suggest being in bed ~30 minutes before.
+    const bedtimeBufferMinutes = 30;
+    const bedtimeStart = new Date(
+      bedtimeDate.getTime() - bedtimeBufferMinutes * 60 * 1000
+    );
+
+    // Bedtime window = when to get into bed
+    bedtimeWindowEl.textContent = `Go to bed between ${formatTime(
+      bedtimeStart
+    )} and ${formatTime(bedtimeDate)}.`;
+
+    // Sleep window = likely asleep period
+    sleepWindowTextEl.textContent = `You’ll likely be asleep between ${formatTime(
       bedtimeDate
-    )} – ${formatTime(wakeDate)}`;
+    )} and ${formatTime(wakeDate)}.`;
 
     sunriseEl.textContent = formatTime(sunriseTime);
     sleepDurationEl.textContent = `${sleepHours.toFixed(1)} hours`;
@@ -196,13 +217,14 @@ form.addEventListener("submit", async (event) => {
     avgTempEl.textContent = formatTemp(stats.avgTemp);
     avgHumidityEl.textContent = formatHumidity(stats.avgHumidity);
 
-    // Simple “comfort” explanation
+    // Simple comfort note
     let comfort = "Conditions look reasonable for sleep.";
     if (stats.avgTemp > 24 || stats.maxTemp > 26) {
       comfort = "It may feel warm overnight. A fan or lighter bedding might help.";
     }
     if (stats.avgHumidity > 70 || stats.maxHum > 80) {
-      comfort += " Humidity is also fairly high, which can make sleep feel sticky.";
+      comfort +=
+        " Humidity is also fairly high, which can make sleep feel sticky.";
     }
 
     comfortNoteEl.textContent = comfort;

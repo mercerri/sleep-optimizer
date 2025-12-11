@@ -28,7 +28,7 @@
                 name="latitude"
                 type="number"
                 step="0.0001"
-                placeholder="e.g. 43.6532"
+                placeholder="Enter latitude"
                 required
               />
             </div>
@@ -40,7 +40,7 @@
                 name="longitude"
                 type="number"
                 step="0.0001"
-                placeholder="e.g. -79.3832"
+                placeholder="Enter longitude"
                 required
               />
             </div>
@@ -86,37 +86,39 @@
       <section id="error" class="status status-error hidden"></section>
 
       <section id="results" class="card hidden">
-        <h2>Recommended bedtime window</h2>
-        <p class="bedtime" id="bedtime-window"></p>
+  <h2>Recommended bedtime window</h2>
+  <p class="bedtime" id="bedtime-window"></p>
+  <p class="sleep-window" id="sleep-window"></p>
 
-        <div class="result-grid">
-          <div>
-            <h3>Sun &amp; time</h3>
-            <p>
-              <strong>Tomorrow’s sunrise:</strong>
-              <span id="sunrise"></span>
-            </p>
-            <p>
-              <strong>Total sleep duration:</strong>
-              <span id="sleep-duration"></span>
-            </p>
-          </div>
+  <div class="result-grid">
+    <div>
+      <h3>Sun &amp; time</h3>
+      <p>
+        <strong>Tomorrow’s sunrise:</strong>
+        <span id="sunrise"></span>
+      </p>
+      <p>
+        <strong>Total sleep duration:</strong>
+        <span id="sleep-duration"></span>
+      </p>
+    </div>
 
-          <div>
-            <h3>Overnight conditions</h3>
-            <p>
-              <strong>Avg temperature:</strong>
-              <span id="avg-temp"></span>
-            </p>
-            <p>
-              <strong>Avg humidity:</strong>
-              <span id="avg-humidity"></span>
-            </p>
-          </div>
-        </div>
+    <div>
+      <h3>Overnight conditions</h3>
+      <p>
+        <strong>Avg temperature:</strong>
+        <span id="avg-temp"></span>
+      </p>
+      <p>
+        <strong>Avg humidity:</strong>
+        <span id="avg-humidity"></span>
+      </p>
+    </div>
+  </div>
 
-        <p id="comfort-note" class="comfort-note"></p>
-      </section>
+  <p id="comfort-note" class="comfort-note"></p>
+</section>
+
 
       <footer class="app-footer">
         <small>
